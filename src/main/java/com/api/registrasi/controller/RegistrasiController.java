@@ -25,9 +25,11 @@ public class RegistrasiController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/murid")
-    public ResponseEntity<List<RegistrasiDataEntity>> getDataByNamaMurid(@RequestParam String namaMurid) {
-        return serviceRegistrasi.getDataMurid(namaMurid);
+    @GetMapping("/search")
+    public ResponseEntity<List<RegistrasiDataEntity>> getDataByNamaAndUmur(
+            @RequestParam String namaMurid,
+            @RequestParam String umur) {
+        return serviceRegistrasi.getDataMurid(namaMurid, umur);
     }
 
 

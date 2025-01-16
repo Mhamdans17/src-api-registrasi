@@ -22,8 +22,9 @@ public class ResponseResgistrasiDTO {
         private String namaWali;
         private String hubunganWali;
         private String alamat;
+        private String tanggalDaftar;
 
-        public MuridWaliMurid(String namaMurid, String umur, String namaWali, String hubunganWali, String alamat) {
+        public MuridWaliMurid(String namaMurid, String umur, String namaWali, String hubunganWali, String alamat, String tanggalDaftar  ) {
         }
     }
 }

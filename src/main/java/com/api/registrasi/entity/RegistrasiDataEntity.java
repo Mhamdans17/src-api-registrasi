@@ -38,5 +38,9 @@ public class RegistrasiDataEntity {
     @Column(name = "alamat")
     private String alamat;
 
+    @Column(name = "asal_sekolah")
     private String asalSekolah;
+
+    @Column(name = "tanggal_daftar")
+    private String tanggalDaftar;
 }
