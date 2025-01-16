@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "a4d19785-200a-43dd-8706-825a7d2ace82",
+		"name": "Registrasi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30827751"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"namaMurid\": \"hamdanX\",\r\n    \"namaWali\": \"said\",\r\n    \"tanggalLahir\": \"2001-01-15\",\r\n    \"alamat\": \"jakarta\",\r\n    \"asalSekolah\": \"SMA 15 jakarta\",\r\n    \"hubunganWali\": \"Konco\",\r\n    \"noTeleponWali\": \"08578906543\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tokyodev/api/registrasi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tokyodev",
+						"api",
+						"registrasi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Murid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tokyodev/api/murid?namaMurid=hamdanX",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tokyodev",
+						"api",
+						"murid"
+					],
+					"query": [
+						{
+							"key": "namaMurid",
+							"value": "hamdanX"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Report",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
