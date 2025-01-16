@@ -15,8 +15,10 @@ import java.util.List;
 @RequestMapping("/tokyodev/api")
 public class RegistrasiController {
 
-    @Autowired
-    ServiceRegistrasi serviceRegistrasi;
+    private final ServiceRegistrasi serviceRegistrasi;
+    public RegistrasiController(ServiceRegistrasi serviceRegistrasi){
+        this.serviceRegistrasi = serviceRegistrasi;
+    }
 
     @PostMapping("/registrasi")
     public ResponseEntity<ResponseResgistrasiDTO> registerMuridWali(
