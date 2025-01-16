@@ -2,7 +2,6 @@ package com.api.registrasi.controller;
 
 import com.api.registrasi.entity.RegistrasiDataEntity;
 import com.api.registrasi.service.ServiceReport;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,10 @@ import java.util.List;
 @RequestMapping("/tokyodev/api")
 public class ReportController {
 
-    @Autowired
-    private ServiceReport serviceReport;
+    private final ServiceReport serviceReport;
+    public ReportController(ServiceReport serviceReport) {
+        this.serviceReport = serviceReport;
+    }
 
     // Endpoint untuk mengambil laporan berdasarkan bulan dan tahun
     @GetMapping("/laporan")
