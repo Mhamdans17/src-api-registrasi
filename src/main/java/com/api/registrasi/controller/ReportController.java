@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tokyodev/api")
 public class ReportController {
 
     private final ServiceReport serviceReport;
@@ -20,8 +19,10 @@ public class ReportController {
     }
 
     // Endpoint untuk mengambil laporan berdasarkan bulan dan tahun
-    @GetMapping("/laporan")
-    public ResponseEntity<List<RegistrasiDataEntity>> getReport(@RequestParam("bulan") String bulan, @RequestParam("tahun") String tahun) {
-        return serviceReport.getReport(bulan, tahun); // Memanggil service untuk mendapatkan laporan
+    @GetMapping("/laporan/bulanan")
+    public ResponseEntity<List<RegistrasiDataEntity>> getLaporanBulanan(
+            @RequestParam String bulan,
+            @RequestParam String tahun) {
+        return ResponseEntity.ok(serviceReport.getReport(bulan, tahun).getBody());
     }
 }

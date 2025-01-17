@@ -1,38 +1,42 @@
 package com.api.registrasi.service;
 
+import com.api.registrasi.entity.UserEntity;
+import com.api.registrasi.repository.UserRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public CustomUserDetailsService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Contoh user in-memory (bisa diganti dengan database)
-        if ("admin".equals(username)) {
-            return User.builder()
-                    .username("admin")
-                    .password(passwordEncoder.encode("password"))
-                    .roles("ADMIN")
-                    .build();
-        } else if ("user".equals(username)) {
-            return User.builder()
-                    .username("user")
-                    .password(passwordEncoder.encode("password"))
-                    .roles("USER")
-                    .build();
-        } else {
-            throw new UsernameNotFoundException("User not found");
-        }
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                user.getRoles().stream()
+                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
+                        .collect(Collectors.toList())
+        );
     }
 }
+
