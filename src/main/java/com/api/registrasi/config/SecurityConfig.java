@@ -23,6 +23,15 @@ public class SecurityConfig {
     @Value("${app.security.admin-role}")
     private String adminRole;
 
+    @Value("${app.security.public-urls}")
+    private String publicUrls;
+
+    @Value("${app.security.admin-urls}")
+    private String adminUrls;
+
+    @Value("${app.security.user-urls}")
+    private String userUrls;
+
     private final UserDetailsService userDetailsService;
 
     public SecurityConfig(UserDetailsService userDetailsService) {
@@ -42,14 +51,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String[] publicUrlList = publicUrls.split(",");
+        String[] adminUrlList = adminUrls.split(",");
+        String[] roleUrlList = userUrls.split(",");
+
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> auth
-                        .requestMatchers("/tokyodev/api/**").hasAnyRole(userRole,adminRole)  // Memastikan role yang digunakan adalah "ADMIN"
-                        .requestMatchers("/laporan/**").hasRole(userRole)
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/request/user").permitAll()
-                        .requestMatchers("/create/roll").permitAll()
+                        .requestMatchers(publicUrlList).permitAll()
+                        .requestMatchers(adminUrlList).hasRole(adminRole)
+                        .requestMatchers(roleUrlList).hasRole(userRole)
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

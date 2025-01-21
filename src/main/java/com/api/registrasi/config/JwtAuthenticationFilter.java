@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String requestURI = request.getRequestURI();
-        if (requestURI.equals("/login") || requestURI.equals("/request/user") || requestURI.equals("/create/roll")) {
+        if (requestURI.equals("/login") || requestURI.equals("/request/user")) {
             chain.doFilter(request, response);
             return;
         }
