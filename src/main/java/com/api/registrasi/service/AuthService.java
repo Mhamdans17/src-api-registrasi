@@ -4,12 +4,15 @@ import com.api.registrasi.entity.UserEntity;
 import com.api.registrasi.repository.RoleRepository;
 import com.api.registrasi.repository.UserRepository;
 import com.api.registrasi.util.JwtUtil;
+import com.api.registrasi.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.api.registrasi.constants.Constants.INVALID_CRIDENTIAL;
 
 @Service
 public class AuthService {
@@ -20,15 +23,15 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private RoleRepository rolleRepository;
-
     public String login(String username, String password) {
+        ValidationUtil.validateNotNullOrEmpty(username, "username");
+        ValidationUtil.validateNotNullOrEmpty(password, "password");
+
         UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_CRIDENTIAL));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("Invalid credentials");
+            throw new IllegalArgumentException(INVALID_CRIDENTIAL);
         }
 
         Set<String> roles = user.getRoles().stream()

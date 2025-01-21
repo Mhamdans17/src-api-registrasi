@@ -7,6 +7,7 @@ public class Constants {
     public static final String RESPONSE_SUCCESS_ADD_DATA = "Registrasi berhasil ditambahkan: {}";
     public static final String NAMA_MURID = "Data murid dengan nama ";
     public static final String EMPTY = " tidak ditemukan";
+    public static final String INVALID_CRIDENTIAL = "Invalid credentials";
 
     private Constants() {
         // Private constructor to prevent instantiation
