@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("tokyodev/api")
 public class RolleController {
 
     private final RolleService rolleService;

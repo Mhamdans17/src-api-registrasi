@@ -1,7 +1,8 @@
 package com.api.registrasi.controller;
 
 import com.api.registrasi.entity.UserEntity;
-import com.api.registrasi.model.RegisterUserDTO;
+import com.api.registrasi.model.RequestRegisterUserDTO;
+import com.api.registrasi.model.UserDTO;
 import com.api.registrasi.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +18,9 @@ public class UserController {
     }
 
     @PostMapping("/request/user")
-    public ResponseEntity<UserEntity> createUser(@RequestBody RegisterUserDTO userRequest) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody RequestRegisterUserDTO userRequest) {
         // Validasi dan panggil metode service
-        UserEntity createdUser = userService.createUser(userRequest.getUserName(),
+        UserDTO createdUser = userService.createUser(userRequest.getUserName(),
                 userRequest.getPassword(),
                 userRequest.getRoles());
         return ResponseEntity.ok(createdUser);

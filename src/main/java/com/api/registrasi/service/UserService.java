@@ -2,7 +2,8 @@ package com.api.registrasi.service;
 
 import com.api.registrasi.entity.RoleEntity;
 import com.api.registrasi.entity.UserEntity;
-import com.api.registrasi.repository.RolleRepository;
+import com.api.registrasi.model.UserDTO;
+import com.api.registrasi.repository.RoleRepository;
 import com.api.registrasi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,9 +22,9 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private RolleRepository rolleRepository;
+    private RoleRepository rolleRepository;
 
-    public UserEntity createUser(String username, String password, Set<String> roleNames) {
+    public UserDTO createUser(String username, String password, Set<String> roleNames) {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("Username cannot be null or empty");
         }
@@ -50,8 +51,18 @@ public class UserService {
         user.setPassword(encodedPassword);
         user.setRoles(roleEntities);
 
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        // Map roles to role names
+        Set<String> roleNamesResponse = new HashSet<>();
+        for (RoleEntity role : roleEntities) {
+            roleNamesResponse.add(role.getRoleName());
+        }
+
+        // Return a UserDTO
+        return new UserDTO(user.getUsername(), roleNamesResponse);
     }
+
 
     // Method tambahan untuk menampilkan password dengan format tertentu (misalnya, mask sebagian)
     public String getMaskedPassword(String rawPassword) {

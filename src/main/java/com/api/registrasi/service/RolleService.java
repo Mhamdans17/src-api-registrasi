@@ -1,7 +1,7 @@
 package com.api.registrasi.service;
 
 import com.api.registrasi.entity.RoleEntity;
-import com.api.registrasi.repository.RolleRepository;
+import com.api.registrasi.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class RolleService {
 
     @Autowired
-    private RolleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     public RoleEntity createRole(String roleName) {
         // Cek apakah role sudah ada

@@ -17,8 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${app.security.admin-role}")
+    @Value("${app.security.user-role}")
     private String userRole;
+
+    @Value("${app.security.admin-role}")
+    private String adminRole;
 
     private final UserDetailsService userDetailsService;
 
@@ -42,9 +45,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> auth
-                        .requestMatchers("/tokyodev/api/**").hasRole(userRole)
+                        .requestMatchers("/tokyodev/api/**").hasAnyRole(userRole,adminRole)  // Memastikan role yang digunakan adalah "ADMIN"
                         .requestMatchers("/laporan/**").hasRole(userRole)
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/request/user").permitAll()
+                        .requestMatchers("/create/roll").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -62,5 +67,4 @@ public class SecurityConfig {
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
-
 }

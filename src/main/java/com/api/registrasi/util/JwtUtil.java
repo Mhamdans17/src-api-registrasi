@@ -20,19 +20,13 @@ public class JwtUtil {
             throw new IllegalArgumentException("Username cannot be null or empty");
         }
 
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(username)  // Set subject (username)
-                .claim("roles", roles)
+                .claim("roles", roles) // Set roles claim
                 .setIssuedAt(new Date())  // Set issued date
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))  // Set expiration date
-                .signWith(SECRET_KEY)  // Sign token using the secret key
-                .compact();  // Compact and return the token
-
-        if (token == null || token.isEmpty()) {
-            throw new IllegalStateException("Token generation failed");
-        }
-
-        return token;  // Return the generated token
+                .signWith(SECRET_KEY)  // Sign token with the secret key
+                .compact();  // Return the compacted token
     }
 
     // Validate JWT Token

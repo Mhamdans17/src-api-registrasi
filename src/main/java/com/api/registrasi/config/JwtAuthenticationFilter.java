@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String requestURI = request.getRequestURI();
-        if (requestURI.equals("/login")) {
+        if (requestURI.equals("/login") || requestURI.equals("/request/user") || requestURI.equals("/create/roll")) {
             chain.doFilter(request, response);
             return;
         }
@@ -60,13 +60,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 roles = (Set<String>) rolesObj;
             }
 
+            // Menyiapkan authorities berdasarkan roles dari token
+            Set<SimpleGrantedAuthority> authorities = roles.stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role)) // Menambahkan "ROLE_" jika perlu
+                    .collect(Collectors.toSet());
+
             // Validasi token dengan username yang diekstrak
             if (authService.validateToken(token, username)) {
-                // Menyiapkan authorities berdasarkan roles dari token
-                Set<SimpleGrantedAuthority> authorities = roles.stream()
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toSet());
-
                 // Menyusun objek Authentication dengan username dan roles
                 User principal = new User(username, "", authorities);
 
