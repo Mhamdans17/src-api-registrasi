@@ -36,7 +36,8 @@ public class ServiceReport {
             throw new IllegalArgumentException("Data untuk bulan " + bulan + " tahun " + tahun + " tidak ditemukan.");
         }
 
-        // Mengembalikan data dalam response dengan status 200 OK
+        log.info("Data Report bulan: {} {}", bulan, reportSiswa);
+
         return ResponseEntity.ok(reportSiswa);
     }
 }

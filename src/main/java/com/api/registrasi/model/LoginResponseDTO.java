@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 public class LoginResponseDTO {
     private String token;
 
-    // Constructor yang benar untuk inisialisasi token
     public LoginResponseDTO(String token) {
         this.token = token;
     }
