@@ -5,6 +5,7 @@ import com.api.registrasi.repository.RoleRepository;
 import com.api.registrasi.repository.UserRepository;
 import com.api.registrasi.util.JwtUtil;
 import com.api.registrasi.util.ValidationUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static com.api.registrasi.constants.Constants.INVALID_CRIDENTIAL;
 
+@Slf4j
 @Service
 public class AuthService {
 

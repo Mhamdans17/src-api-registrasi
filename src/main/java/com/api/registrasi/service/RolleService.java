@@ -2,9 +2,11 @@ package com.api.registrasi.service;
 
 import com.api.registrasi.entity.RoleEntity;
 import com.api.registrasi.repository.RoleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RolleService {
 
@@ -17,11 +19,11 @@ public class RolleService {
             throw new IllegalArgumentException("Role dengan nama " + roleName + " sudah ada.");
         }
 
-        // Membuat role baru
         RoleEntity role = new RoleEntity();
         role.setRoleName(roleName);
 
-        // Simpan ke database
+        log.info("Data role berhasil ditambah: {}", role);
+
         return roleRepository.save(role);
     }
 
