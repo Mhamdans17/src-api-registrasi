@@ -72,7 +72,6 @@ public class UserService {
         return response;
     }
 
-
     // Method tambahan untuk menampilkan password dengan format tertentu (misalnya, mask sebagian)
     public String getMaskedPassword(String rawPassword) {
         String encodedPassword = passwordEncoder.encode(rawPassword);
